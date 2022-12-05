@@ -45,6 +45,10 @@
  *
  */
 
+#include <algorithm>
+#include <cmath>
+#include <cstdio>
+
 #include <geometry_msgs/msg/twist.hpp>
 #include <rclcpp/rclcpp.hpp>
 #include <sensor_msgs/msg/image.hpp>
@@ -135,25 +139,24 @@ class RoomBa : public rclcpp::Node {
    *
    */
 
-  bool hasObstacle() {
+   bool hasObstacle() {
     unsigned char* dataPtr = lastImg_.data.data();
     float* floatData = (float*)dataPtr;
-
+   
     int idx;
-    for (unsigned int row = 0; row < lastImg_.height - 40; row++)
+    for (unsigned int row = 0; row < lastImg_.height - 40; row++) {
       for (unsigned int col = 0; col < lastImg_.width; col++) {
         idx = (row * lastImg_.width) + col;
-        if (floatData[idx] < 1.0) {
-          RCLCPP_INFO(this->get_logger(),
+        RCLCPP_INFO(this->get_logger(),
                       "row=%d, col=%d, floatData[idx] = %.2f", row, col,
                       floatData[idx]);
+        if (floatData[idx] < 0.5) {
           return true;
         }
       }
-
+    }  
     return false;
   }
-
   ////////////////////////////////////////
   // member variables
   ////////////////////////////////////////

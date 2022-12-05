@@ -353,7 +353,7 @@
 
     <link name="camera_rgb_optical_frame">
       <inertial>
-        <pose>0.076 0.0 0.093 0 0 0</pose>
+        <pose>0.076 0.0 1.093 0 0 0</pose>
         <inertia>
           <ixx>0.001</ixx>
           <ixy>0.000</ixy>
@@ -365,35 +365,23 @@
         <mass>0.035</mass>
       </inertial>
 
-      <pose>0.076 0.0 0.093 0 0 0</pose>
+      <pose>0.076 0.0 1.093 0 0 0</pose>
       <sensor name="camera" type="depth">
-        <always_on>true</always_on>
-        <visualize>true</visualize>
-        <update_rate>30</update_rate>
-        <camera name="picam">
-          <horizontal_fov>1.085595</horizontal_fov>
+        <camera>
+          <horizontal_fov>1.047</horizontal_fov>
           <image>
-              <width>640</width>
-              <height>480</height>
-              <format>R8G8B8</format>
+              <width>320</width>
+              <height>240</height>
+              <!-- <format>R8G8B8</format> -->
           </image>
           <clip>
-              <near>0.03</near>
+              <near>0.1</near>
               <far>100</far>
           </clip>
-          <noise>
-            <type>gaussian</type>
-            <!-- Noise is sampled independently per pixel on each frame.
-                  That pixel's noise value is added to each of its color
-                  channels, which at that point lie in the range [0,1]. -->
-            <mean>0.0</mean>
-            <stddev>0.007</stddev>
-          </noise>
         </camera>
         <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
             <ros>
               <namespace>demo_cam</namespace>
-
               <!-- topics need to be prefixed with camera_name for remapping -->
               <remapping>camera/image_raw:=camera/image_demo</remapping>
               <remapping>camera/depth/image_raw:=camera/depth_demo</remapping>
@@ -404,22 +392,18 @@
 
             <!-- omit camera_name to default to sensor name -->
             <camera_name>camera</camera_name>
-            <frame_name>camera_rgb_optical_frame</frame_name>
+            <!-- <frame_name>camera_rgb_optical_frame</frame_name> -->
 
             <min_depth>0.1</min_depth>
             <max_depth>500</max_depth>
           </plugin>
-          <!-- <plugin name="camera_driver" filename="libgazebo_ros_camera.so">
-            <ros> -->
-              <!-- <namespace>test_cam</namespace> -->
-              <!-- <remapping>image_raw:=image_demo</remapping> -->
-              <!-- <remapping>camera_info:=camera_info_demo</remapping> -->
-            <!-- </ros> -->
-            <!-- camera_name>omit so it defaults to sensor name</camera_name-->
-            <!-- frame_name>omit so it defaults to link name</frameName-->
-            <!-- <hack_baseline>0.07</hack_baseline> -->
-          <!-- </plugin> -->
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>1</visualize>
       </sensor>
+      <self_collide>0</self_collide>
+      <enable_wind>0</enable_wind>
+      <kinematic>0</kinematic>
     </link>    
 
     <joint name="base_joint" type="fixed">
