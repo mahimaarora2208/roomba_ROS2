@@ -40,7 +40,7 @@ To launch nodes using launch file and pass parameters using command line:
 ```
 cd <ROS2_ws>/
 . install/setup.bash
- 
+
 
 ```
 ### ROS2 Bags
