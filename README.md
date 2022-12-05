@@ -50,7 +50,7 @@ To run them separately, you can use:
 ```
 ros2 bag record -o rosbag_files <topic>
 ```
-To check topic information that is in the rosbag:
+To check topic information that is in the rosbag:git
 ```
 ros2 bag info rosbag_files
 ```
