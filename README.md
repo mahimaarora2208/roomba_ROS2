@@ -22,42 +22,42 @@ cd <your_ROS2_ws>/src
 git clone https://github.com/mahimaarora2208/roomba_ros2.git
 cd ..   
 rosdep install -i --from-path src --rosdistro galactic -y
+
+export GAZEBO_MODEL_PATH=`ros2 pkg prefix turtlebot3_gazebo`/share/turtlebot3_gazebo/models/
+export TURTLEBOT3_MODEL=waffle_pi
+
 colcon build --packages-select roomba_ros2
 source . install/setup.bash
-source ~/<your ROS2 installation>/opt/ros/galactic/setup.bash
-```
-
-### Run Publisher
-To run the publisher node, open a new terminal and run:
-```
-cd <your_ROS2_ws>
-. install/setup.bash
-ros2 run roomba_ros2 obstacle_avoidance
-```
-
-### Launch File
-To launch nodes using launch file and pass parameters using command line:
-```
-cd <ROS2_ws>/
-. install/setup.bash
-
 
 ```
-### ROS2 Bags
-To record rosbags in a custom folder:
+#### Note:
+In spawn_turtlebot3.launch.py file , You will need to change urdf_path = 'your model.sdf path'. This is hardcoded for now and it is meant to be changed to dynamic path. 
+
+### Run Launch File to run simulation
+To run the Launch file for obstacle avoidance node,run:
 ```
-ros2 bag record -o rosbag_files /chatter
+
+ros2 launch roomba_ros2 turtlebot3_world.launch.py
 ```
-To check topic information that is in the rosbag:
+
+### ROS2 Bags and Enable/Disable them (and RESULTS)
+
+To enable/disable rosbags, go to file ros_bag.launch.py and change "record_all_topics". (set to true by default)
+
+Rosbag result files:[link](https://drive.google.com/drive/folders/1MS1ONd6Gny0ZCTlkEorER58Ab8U5tcnC?usp=share_link)
+
+To run them separately, you can use:
+```
+ros2 bag record -o rosbag_files <topic>
+```
+To check topic information that is in the rosbag:git
 ```
 ros2 bag info rosbag_files
 ```
 Lastly, to play back the data from rosbags:
 ```
 ros2 bag play rosbag_files
-```
-
-The results for the listener displaying output based on rosbags is in the result folder. Please note, it works independent of publisher node.
+``` 
 ## Results
 The results after running the following commands are stored in the <your_package>/results folder.
 
